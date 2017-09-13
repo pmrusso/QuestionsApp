@@ -1,14 +1,18 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11134" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="skm-Ga-4xt">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11106"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Questions List View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="QuestionsListViewController" customModule="QuestionsApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -16,11 +20,87 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="1" green="1" blue="0.48284384645061729" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
+                    <navigationItem key="navigationItem" id="ieg-yF-CNu"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="1076" y="138.98050974512745"/>
+        </scene>
+        <!--Loading View Controller-->
+        <scene sceneID="1Vk-vx-qMX">
+            <objects>
+                <viewController storyboardIdentifier="loadingScreen" id="skm-Ga-4xt" customClass="LoadingViewController" customModule="QuestionsApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="PCb-b7-8io"/>
+                        <viewControllerLayoutGuide type="bottom" id="2DX-4w-5YU"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="nqZ-yh-LEd">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Iqx-SG-Gsi">
+                                <rect key="frame" x="177" y="323" width="20" height="20"/>
+                            </activityIndicatorView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JKy-YG-6Uu">
+                                <rect key="frame" x="67" y="261" width="240" height="144"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b8T-vG-rNm">
+                                        <rect key="frame" x="50" y="57" width="140" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="140" id="8V3-yv-kZj"/>
+                                            <constraint firstAttribute="height" constant="30" id="XBQ-7h-PJt"/>
+                                        </constraints>
+                                        <state key="normal" title="Retry Action"/>
+                                        <connections>
+                                            <action selector="retryCheckServerHealth:" destination="skm-Ga-4xt" eventType="touchUpInside" id="cBO-oQ-AxS"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="240" id="4ec-XS-vAp"/>
+                                    <constraint firstAttribute="height" constant="144" id="Ktm-rJ-OXe"/>
+                                    <constraint firstItem="b8T-vG-rNm" firstAttribute="centerX" secondItem="JKy-YG-6Uu" secondAttribute="centerX" id="dQW-5u-u05"/>
+                                    <constraint firstItem="b8T-vG-rNm" firstAttribute="centerY" secondItem="JKy-YG-6Uu" secondAttribute="centerY" id="xnz-Co-ivI"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Iqx-SG-Gsi" firstAttribute="centerX" secondItem="nqZ-yh-LEd" secondAttribute="centerX" id="Zk2-t3-cbR"/>
+                            <constraint firstItem="JKy-YG-6Uu" firstAttribute="centerX" secondItem="nqZ-yh-LEd" secondAttribute="centerX" id="ZsM-sg-G24"/>
+                            <constraint firstItem="Iqx-SG-Gsi" firstAttribute="centerY" secondItem="nqZ-yh-LEd" secondAttribute="centerY" id="dEd-Rh-Zwg"/>
+                            <constraint firstItem="JKy-YG-6Uu" firstAttribute="centerY" secondItem="nqZ-yh-LEd" secondAttribute="centerY" id="vOO-LT-27U"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="activityIndicator" destination="Iqx-SG-Gsi" id="iBs-4x-0y3"/>
+                        <outlet property="retryView" destination="JKy-YG-6Uu" id="jy1-pT-zch"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KCk-eK-sag" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="605.60000000000002" y="938.68065967016503"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="CEl-Cr-qSp">
+            <objects>
+                <navigationController storyboardIdentifier="questionsListNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="4e6-B6-nda" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="RUC-0M-cGt">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="r8E-LX-hM7"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5lh-5K-qcb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-329" y="60"/>
         </scene>
     </scenes>
 </document>

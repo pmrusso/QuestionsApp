@@ -1,14 +1,7 @@
-//
-//  ViewController.swift
-//  QuestionsApp
-//
-//  Created by Pedro Russo on 08/09/2017.
-//  Copyright © 2017 My Own. All rights reserved.
-//
-
 import UIKit
 
-class ViewController: UIViewController {
+class QuestionsListViewController: UIViewController {
+    @IBOutlet weak var tableView: UITableView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,7 +12,5 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
 }
 
