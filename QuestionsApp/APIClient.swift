@@ -12,6 +12,7 @@ final class APIClient {
     
     enum APIRequest {
         case getServerHealth(onSuccess: onSuccessFuncType, onError: onErrorFuncType)
+        case listQuestions(limit: Int, offset: Int, filter: String, onSuccess: onSuccessFuncType, onError: onErrorFuncType)
     }
     
     private static var Manager: Alamofire.SessionManager = {
@@ -40,6 +41,10 @@ final class APIClient {
         getServerHealth(onSuccess: onSuccess, onError: onError, attempt: 1)
     }
     
+    func listQuestions(limit: Int, offset: Int, filter: String, onSuccess: @escaping onSuccessFuncType, onError: @escaping onErrorFuncType) {
+        listQuestions(limit: limit, offset: offset, filter: filter, onSuccess: onSuccess, onError: onError, attempt: 1)
+    }
+    
     fileprivate func getServerHealth(onSuccess: @escaping onSuccessFuncType, onError: @escaping onErrorFuncType, attempt: Int) {
         let fullURL = baseAPIURL + "/health"
         apiRequest(fullURL: fullURL, method: .get, parameters: [:], onCompletion: onSuccess, onError: {[weak self] error in
@@ -53,15 +58,35 @@ final class APIClient {
         })
     }
     
+    fileprivate func listQuestions(limit: Int, offset: Int, filter: String, onSuccess: @escaping onSuccessFuncType, onError: @escaping onErrorFuncType, attempt: Int) {
+        let fullURL = baseAPIURL + "/questions?\(limit)&\(offset)&\(filter)"
+        
+        apiRequest(fullURL: fullURL, method: .get, parameters: [:], onCompletion: onSuccess, onError: {
+            [weak self] error in
+            if (self?.isRecoverableException (error! as NSError) ?? false)  && attempt < (self?.MAX_RETRIES) ?? 0{
+                self?.retryRequest(attempt: attempt, request: .listQuestions(limit: limit, offset: offset, filter: filter, onSuccess: onSuccess, onError: onError))
+                return
+            }
+            DispatchQueue.main.async {
+                onError(error)
+            }
+        })
+    }
+    
+    
     fileprivate func apiRequest(fullURL: String, method: HTTPMethod, parameters: [String:Any], onCompletion: @escaping onSuccessFuncType, onError: @escaping onErrorFuncType)
     {
         APIClient.Manager.request(fullURL, method: method, parameters: parameters).responseJSON {
             response in
 
             switch response.result {
-            case .success(let json):
-                guard let json = json as? NSDictionary else {
-                    return
+            case .success(let jsonResponse):
+                var json = NSDictionary()
+                
+                if let jsonTest = jsonResponse as? NSDictionary {
+                    json = jsonTest
+                }else if let jsonTest = jsonResponse as? NSArray {
+                    json = [Key.JSON.Response.questions:jsonTest]
                 }
                 
                 guard let errorCode = response.response?.statusCode,

@@ -21,6 +21,7 @@ struct Key {
         
         struct Response {
             static let status =  "status"
+            static let questions = "questions"
         }
     }
     
